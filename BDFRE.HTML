@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Chiapas Inn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        .seccion {
+            margin-bottom: 40px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        form input, form select, form button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .table-container {
+            margin-top: 30px;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+<header>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlzUw0bSrvhff-CLuqYGIT-YUvxKMlpY1bUw&s" alt="Descripción de la imagen" width="20%" />
+</header>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Hotel Chiapas Inn</h1>
+        <nav>
+            <ul>
+                <li><a href="#reserva" onclick="mostrarSeccion('reserva')">Registrar Reserva</a></li>
+                <li><a href="#registros" onclick="mostrarSeccion('registros')">Ver Registros</a></li>
+                <li><a href="#huesped" onclick="mostrarSeccion('huesped')">Registrar Huésped</a></li>
+                <li><a href="#habitacion" onclick="mostrarSeccion('habitacion')">Registrar Habitación</a></li>
+                <li><a href="#empleado" onclick="mostrarSeccion('empleado')">Registrar Empleado</a></li>
+                <li><a href="#servicio" onclick="mostrarSeccion('servicio')">Registrar Servicio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección para Registrar Reserva -->
+        <section id="reserva" class="seccion">
+            <h2>Registrar Reserva</h2>
+            <form id="formReserva">
+              <h3>Datos del Cliente</h3>
+                <label for="nombre_cliente">Nombre:</label>
+                <input type="text" id="nombre_cliente" required><br>
+
+                <label for="apellido_paterno">Apellido Paterno:</label>
+                <input type="text" id="apellido_paterno" required><br>
+
+                <label for="apellido_materno">Apellido Materno:</label>
+                <input type="text" id="apellido_materno" required><br>
+
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" required><br>
+
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" required><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required><br>
+
+                <h3>Datos de la Habitación</h3>
+               <label for="tipo_habitacion">Tipo de Habitación:</label>
+               <select id="tipo_habitacion">
+               <option value="Sencilla">Sencilla</option>
+               <option value="Doble">Doble</option>
+               <option value="Familiar">Familiar</option>
+               <option value="Suite">Suite</option>
+               <option value="Prime">Prime</option>
+               </select><br>
+
+                <h3>Detalles de la Reserva</h3>
+                <label for="fecha_reserva">Fecha de Reserva:</label>
+                <input type="date" id="fecha_reserva" disabled><br>
+
+                <label for="check_in">Check-In:</label>
+                <input type="date" id="check_in" required><br>
+
+                <label for="check_out">Check-Out:</label>
+                <input type="date" id="check_out" required><br>
+
+                <label for="estado_reserva">Estado:</label>
+                <select id="estado_reserva">
+                    <option value="Confirmada">Confirmada</option>
+                    <option value="Cancelada">Cancelada</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select><br>
+
+                <button type="button" onclick="registrarReserva()">Registrar Reserva</button>
+            </form>
+        </section>
+
+        <!-- Sección para ver registros -->
+        <section id="registros" class="seccion" style="display: none;">
+            <h2>Registros de Reservas</h2>
+            <div id="registrosReserva"></div>
+
+            <h2>Registros de Huéspedes</h2>
+            <div id="registrosHuesped"></div>
+
+            <h2>Registros de Habitaciones</h2>
+            <div id="registrosHabitacion"></div>
+
+            <h2>Registros de Empleados</h2>
+            <div id="registrosEmpleado"></div>
+
+            <h2>Registros de Servicios</h2>
+            <div id="registrosServicio"></div>
+        </section>
+
+        <!-- Sección para Registrar Huésped -->
+        <section id="huesped" class="seccion">
+            <h2>Registrar Huésped</h2>
+            <form id="formHuesped">
+                <label for="nombre_huesped">Nombre:</label>
+                <input type="text" id="nombre_huesped" required><br>
+
+                <label for="apellido_paterno_huesped">Apellido Paterno:</label>
+                <input type="text" id="apellido_paterno_huesped" required><br>
+
+                <label for="apellido_materno_huesped">Apellido Materno:</label>
+                <input type="text" id="apellido_materno_huesped" required><br>
+
+                <label for="direccion_huesped">Dirección:</label>
+                <input type="text" id="direccion_huesped" required><br>
+
+                <label for="telefono_huesped">Teléfono:</label>
+                <input type="text" id="telefono_huesped" required><br>
+
+                <label for="email_huesped">Email:</label>
+                <input type="email" id="email_huesped" required><br>
+
+                <button type="button" onclick="registrarHuesped()">Registrar Huésped</button>
+            </form>
+        </section>
+
+        <!-- Sección para Registrar Habitación -->
+        <section id="habitacion" class="seccion">
+            <h2>Registrar Habitación</h2>
+            <form id="formHabitacion">
+                <label for="tipo_habitacion_registro">Tipo de Habitación:</label>
+                <select id="tipo_habitacion_registro">
+                    <option value="Sencilla">Sencilla</option>
+                    <option value="Doble">Doble</option>
+                    <option value="Familiar">Familiar</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Prime">Prime</option>
+                </select><br>
+
+                <label for="precio_habitacion">Precio:</label>
+                <input type="number" id="precio_habitacion" required><br>
+
+                <label for="estado_habitacion">Estado:</label>
+                <select id="estado_habitacion">
+                    <option value="Disponible">Disponible</option>
+                    <option value="Ocupada">Ocupada</option>
+                </select><br>
+
+                <label for="numero_habitacion">Número de Habitación:</label>
+                <input type="number" id="numero_habitacion" required><br>
+
+                <button type="button" onclick="registrarHabitacion()">Registrar Habitación</button>
+            </form>
+        </section>
+
+        <!-- Sección para Registrar Empleado -->
+        <section id="empleado" class="seccion">
+    <h2>Registrar Empleado</h2>
+    <form id="formEmpleado">
+        <label for="nombre_empleado">Nombre:</label>
+        <input type="text" id="nombre_empleado" required><br>
+
+        <label for="apellido_paterno_empleado">Apellido Paterno:</label>
+        <input type="text" id="apellido_paterno_empleado" required><br>
+
+        <label for="apellido_materno_empleado">Apellido Materno:</label>
+        <input type="text" id="apellido_materno_empleado" required><br>
+
+        <label for="puesto">Puesto:</label>
+        <select id="puesto" name="puesto">
+            <option value="recepcionista">Recepcionista</option>
+            
+        
+<option value="camarero">Camarero</option>
+            
+        
+<option value="conserje">Conserje</option>
+            
+       
+
+    
+
+ 
+<option value="gerente">Gerente</option>
+            <option value="personal_mantenimiento">Personal de Mantenimiento</option>
+        </select>
+
+        <button type="button" onclick="registrarEmpleado()">Registrar Empleado</button>
+    
+   
+</form>
+</section>
+        
+
+        <!-- Sección para Registrar Servicio -->
+        <section id="servicio" class="seccion">
+            <h2>Registrar Servicio</h2>
+            <form id="formServicio">
+                <label for="nombre_servicio">Nombre del Servicio:</label>
+                <input type="text" id="nombre_servicio" required><br>
+
+                <label for="precio_servicio">Precio:</label>
+                <input type="number" id="precio_servicio" required><br>
+
+                <label for="descripcion_servicio">Descripción:</label>
+                <textarea id="descripcion_servicio" required></textarea><br>
+
+                <button type="button" onclick="registrarServicio()">Registrar Servicio</button>
+            </form>
+        </section>
+    </main>
+<h6> Base de datos creada por lics Inc. David, Emiliano ,Patricio</h6>
+
+    <script>
+        // Función para mostrar las secciones
+        function mostrarSeccion(seccion) {
+            document.querySelectorAll('.seccion').forEach(function (sec) {
+                sec.style.display = 'none';
+            });
+            document.getElementById(seccion).style.display = 'block';
+        }
+
+        // Variables globales para almacenar los datos
+        let reservas = JSON.parse(localStorage.getItem('reservas')) || [];
+        let huespedes = JSON.parse(localStorage.getItem('huespedes')) || [];
+        let habitaciones = JSON.parse(localStorage.getItem('habitaciones')) || [];
+        let empleados = JSON.parse(localStorage.getItem('empleados')) || [];
+        let servicios = JSON.parse(localStorage.getItem('servicios')) || [];
+
+        // Función para cargar los registros
+        function cargarRegistros() {
+            // Registros de Reservas
+            let registrosReserva = reservas;
+            let registrosHTML = "<div class='table-container'><table><tr><th>ID</th><th>Cliente</th><th>Habitación</th><th>Check-In</th><th>Check-Out</th><th>Estado</th></tr>";
+            registrosReserva.forEach(function(reserva, index) {
+                registrosHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${reserva.nombreCliente} ${reserva.apellidoPaterno} ${reserva.apellidoMaterno}</td>
+                    <td>${reserva.tipoHabitacion}</td>
+                    <td>${reserva.checkIn}</td>
+                    <td>${reserva.checkOut}</td>
+                    <td>${reserva.estadoReserva}</td>
+                </tr>`;
+            });
+            registrosHTML += "</table></div>";
+            document.getElementById('registrosReserva').innerHTML = registrosHTML;
+
+            // Registros de Huéspedes
+            let registrosHuesped = huespedes;
+            let registrosHuespedHTML = "<div class='table-container'><table><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Email</th></tr>";
+            registrosHuesped.forEach(function(huesped, index) {
+                registrosHuespedHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${huesped.nombreHuesped} ${huesped.apellidoPaternoHuesped} ${huesped.apellidoMaternoHuesped}</td>
+                    <td>${huesped.telefonoHuesped}</td>
+                    <td>${huesped.emailHuesped}</td>
+                </tr>`;
+            });
+            registrosHuespedHTML += "</table></div>";
+            document.getElementById('registrosHuesped').innerHTML = registrosHuespedHTML;
+
+            // Registros de Habitaciones
+            let registrosHabitacion = habitaciones;
+            let registrosHabitacionHTML = "<div class='table-container'><table><tr><th>ID</th><th>Tipo</th><th>Precio</th><th>Estado</th><th>Número</th></tr>";
+            registrosHabitacion.forEach(function(habitacion, index) {
+                registrosHabitacionHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${habitacion.tipoHabitacion}</td>
+                    <td>${habitacion.precioHabitacion}</td>
+                    <td>${habitacion.estadoHabitacion}</td>
+                    <td>${habitacion.numeroHabitacion}</td>
+                </tr>`;
+            });
+            registrosHabitacionHTML += "</table></div>";
+            document.getElementById('registrosHabitacion').innerHTML = registrosHabitacionHTML;
+
+            // Registros de Empleados
+            let registrosEmpleado = empleados;
+            let registrosEmpleadoHTML = "<div class='table-container'><table><tr><th>ID</th><th>Nombre</th><th>Puesto</th></tr>";
+            registrosEmpleado.forEach(function(empleado, index) {
+                registrosEmpleadoHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${empleado.nombreEmpleado} ${empleado.apellidoPaternoEmpleado} ${empleado.apellidoMaternoEmpleado}</td>
+                    <td>${empleado.puestoEmpleado}</td>
+                </tr>`;
+            });
+            registrosEmpleadoHTML += "</table></div>";
+            document.getElementById('registrosEmpleado').innerHTML = registrosEmpleadoHTML;
+
+            // Registros de Servicios
+            let registrosServicio = servicios;
+            let registrosServicioHTML = "<div class='table-container'><table><tr><th>ID</th><th>Servicio</th><th>Precio</th><th>Descripción</th></tr>";
+            registrosServicio.forEach(function(servicio, index) {
+                registrosServicioHTML += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${servicio.nombreServicio}</td>
+                    <td>${servicio.precioServicio}</td>
+                    <td>${servicio.descripcionServicio}</td>
+                </tr>`;
+            });
+            registrosServicioHTML += "</table></div>";
+            document.getElementById('registrosServicio').innerHTML = registrosServicioHTML;
+        }
+
+        // Llamar la función para cargar los registros al iniciar la página
+        cargarRegistros();
+
+        // Función para registrar una reserva
+        function registrarReserva() {
+            const nombreCliente = document.getElementById('nombre_cliente').value;
+            const apellidoPaterno = document.getElementById('apellido_paterno').value;
+            const apellidoMaterno = document.getElementById('apellido_materno').value;
+            const direccion = document.getElementById('direccion').value;
+            const telefono = document.getElementById('telefono').value;
+            const email = document.getElementById('email').value;
+            const tipoHabitacion = document.getElementById('tipo_habitacion').value;
+            const checkIn = document.getElementById('check_in').value;
+            const checkOut = document.getElementById('check_out').value;
+            const estadoReserva = document.getElementById('estado_reserva').value;
+
+            // Crear un objeto de reserva
+            const reserva = {
+                nombreCliente,
+                apellidoPaterno,
+                apellidoMaterno,
+                direccion,
+                telefono,
+                email,
+                tipoHabitacion,
+                checkIn,
+                checkOut,
+                estadoReserva
+            };
+
+            // Guardar la reserva en el localStorage
+            reservas.push(reserva);
+            localStorage.setItem('reservas', JSON.stringify(reservas));
+
+            // Limpiar el formulario
+            document.getElementById('formReserva').reset();
+            cargarRegistros(); // Recargar los registros
+        }
+
+        // Función para registrar un huésped
+        function registrarHuesped() {
+            const nombreHuesped = document.getElementById('nombre_huesped').value;
+            const apellidoPaternoHuesped = document.getElementById('apellido_paterno_huesped').value;
+            const apellidoMaternoHuesped = document.getElementById('apellido_materno_huesped').value;
+            const direccionHuesped = document.getElementById('direccion_huesped').value;
+            const telefonoHuesped = document.getElementById('telefono_huesped').value;
+            const emailHuesped = document.getElementById('email_huesped').value;
+
+            // Crear un objeto de huésped
+            const huesped = {
+                nombreHuesped,
+                apellidoPaternoHuesped,
+                apellidoMaternoHuesped,
+                direccionHuesped,
+                telefonoHuesped,
+                emailHuesped
+            };
+
+            // Guardar el huésped en el localStorage
+            huespedes.push(huesped);
+            localStorage.setItem('huespedes', JSON.stringify(huespedes));
+
+            // Limpiar el formulario
+            document.getElementById('formHuesped').reset();
+            cargarRegistros(); // Recargar los registros
+        }
+
+        // Función para registrar una habitación
+        function registrarHabitacion() {
+            const tipoHabitacion = document.getElementById('tipo_habitacion_registro').value;
+            const precioHabitacion = document.getElementById('precio_habitacion').value;
+            const estadoHabitacion = document.getElementById('estado_habitacion').value;
+            const numeroHabitacion = document.getElementById('numero_habitacion').value;
+
+            // Crear un objeto de habitación
+            const habitacion = {
+                tipoHabitacion,
+                precioHabitacion,
+                estadoHabitacion,
+                numeroHabitacion
+            };
+
+            // Guardar la habitación en el localStorage
+            habitaciones.push(habitacion);
+            localStorage.setItem('habitaciones', JSON.stringify(habitaciones));
+
+            // Limpiar el formulario
+            document.getElementById('formHabitacion').reset();
+            cargarRegistros(); // Recargar los registros
+        }
+
+        // Función para registrar un empleado
+        function registrarEmpleado() {
+            const nombreEmpleado = document.getElementById('nombre_empleado').value;
+            const apellidoPaternoEmpleado = document.getElementById('apellido_paterno_empleado').value;
+            const apellidoMaternoEmpleado = document.getElementById('apellido_materno_empleado').value;
+            const puestoEmpleado = document.getElementById('puesto_empleado').value;
+
+            // Crear un objeto de empleado
+            const empleado = {
+                nombreEmpleado,
+                apellidoPaternoEmpleado,
+                apellidoMaternoEmpleado,
+                puestoEmpleado
+            };
+
+            // Guardar el empleado en el localStorage
+            empleados.push(empleado);
+            localStorage.setItem('empleados', JSON.stringify(empleados));
+
+            // Limpiar el formulario
+            document.getElementById('formEmpleado').reset();
+            cargarRegistros(); // Recargar los registros
+        }
+
+        // Función para registrar un servicio
+        function registrarServicio() {
+            const nombreServicio = document.getElementById('nombre_servicio').value;
+            const precioServicio = document.getElementById('precio_servicio').value;
+            const descripcionServicio = document.getElementById('descripcion_servicio').value;
+
+            // Crear un objeto de servicio
+            const servicio = {
+                nombreServicio,
+                precioServicio,
+                descripcionServicio
+            };
+
+            // Guardar el servicio en el localStorage
+            servicios.push(servicio);
+            localStorage.setItem('servicios', JSON.stringify(servicios));
+
+            // Limpiar el formulario
+            document.getElementById('formServicio').reset();
+            cargarRegistros(); // Recargar los registros
+        }
+function cargarTiposHabitacion() {
+    const tiposHabitacion = ['Sencilla', 'Doble', 'Familiar', 'Suite', 'Prime'];
+    const selectHabitacion = document.getElementById('tipo_habitacion');
+    tiposHabitacion.forEach(tipo => {
+        const option = document.createElement('option');
+        option.value = tipo;
+        option.textContent = tipo;
+        selectHabitacion.appendChild(option);
+    });
+}
+cargarTiposHabitacion();
+function obtenerPuesto() {
+    // Obtener el valor seleccionado del dropdown (lista desplegable)
+    const puestoSeleccionado = document.getElementById('puesto').value;
+
+    // Mostrar el puesto seleccionado en consola (puedes usarlo según lo necesites)
+    
+ 
+console.log('Puesto seleccionado:', puestoSeleccionado);
+
+    // Si lo necesitas, puedes hacer algo con este dato, como almacenarlo en localStorage, o enviarlo a una base de datos
+}
+    // Función para registrar un empleado
+function registrarEmpleado() {
+    // Obtener los valores de los campos del formulario
+    const nombreEmpleado = document.getElementById('nombre_empleado').value;
+    const apellidoPaternoEmpleado = document.getElementById('apellido_paterno_empleado').value;
+    const apellidoMaternoEmpleado = document.getElementById('apellido_materno_empleado').value;
+    const puestoEmpleado = document.getElementById('puesto').value;
+
+    // Crear un nuevo objeto de empleado
+    const nuevoEmpleado = {
+        nombreEmpleado,
+        apellidoPaternoEmpleado,
+        apellidoMaternoEmpleado,
+        puestoEmpleado
+    };
+
+    // Agregar el nuevo empleado a la lista de empleados (asegúrate de tener la variable empleados declarada)
+    empleados.push(nuevoEmpleado);
+
+    // Actualizar la tabla de empleados
+    actualizarRegistros();
+
+    // Limpiar el formulario después de registrar el empleado
+    document.getElementById('formEmpleado').reset();
+}
+
+// Función para mostrar los registros de empleados
+function actualizarRegistros() {
+    let registrosEmpleado = empleados;
+    let registrosEmpleadoHTML = "<div class='table-container'><table><tr><th>ID</th><th>Nombre</th><th>Puesto</th></tr>";
+    registrosEmpleado.forEach(function(empleado, index) {
+        registrosEmpleadoHTML += `<tr>
+            <td>${index + 1}</td>
+            <td>${empleado.nombreEmpleado} ${empleado.apellidoPaternoEmpleado} ${empleado.apellidoMaternoEmpleado}</td>
+            <td>${empleado.puestoEmpleado}</td>
+        </tr>`;
+    });
+    registrosEmpleadoHTML += "</table></div>";
+    document.getElementById('registrosEmpleado').innerHTML = registrosEmpleadoHTML;
+}
+
+</script>
+</body>
+</html>
